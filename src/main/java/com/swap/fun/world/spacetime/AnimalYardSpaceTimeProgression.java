@@ -1,11 +1,12 @@
 package com.swap.fun.world.spacetime;
 
-import com.swap.fun.world.life.LivingBeing;
+import com.swap.fun.world.constants.DayState;
+import com.swap.fun.world.inout.InitialData;
+import com.swap.fun.world.living.animal.Animal;
 import com.swap.fun.world.mind.animal.AnimalBehaviour;
-import com.swap.fun.world.mind.animal.AnimalFriendshipBehaviour;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Animals of Yard have their own simulation world. They extend through a generic spaceTimeProgression mechanism. This class implements state design pattern to manage state of time
@@ -15,11 +16,14 @@ import java.util.List;
  */
 public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
 
+    Logger logger = Logger.getLogger(AnimalYardSpaceTimeProgression.class.getName());
 
     private int currentDay;
     private DayState dayState;
     private int doomsDay;
     private AnimalBehaviour animalFriendshipBehaviour;
+    private List<? extends Animal> yardAnimals;
+    private boolean apocalypse;
 
     public AnimalYardSpaceTimeProgression(int currentDay, DayState dayState, int doomsDay, AnimalBehaviour animalFriendshipBehaviour) {
         this.currentDay = currentDay;
@@ -29,48 +33,57 @@ public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
     }
 
     public void introduceLivingBeings() {
-        List<LivingBeing> yardAnimals = new ArrayList<LivingBeing>();
-    }
 
-    public void initiateBehaviouralTraits() {
-        animalFriendshipBehaviour = new AnimalFriendshipBehaviour();
+        yardAnimals = new InitialData().loadAnimals();
     }
 
     public void spinTime() {
 
-        switch (dayState) {
-            case DAWN:
-                //TODO : Day-n message
-                dayState = DayState.BEFORE_LUNCH;
-                break;
-            case BEFORE_LUNCH:
-                //TODO : break friendship
-                dayState = DayState.LUNCH;
-                break;
-            case LUNCH:
-                //TODO : print brands.
-                dayState = DayState.AFTER_LUNCH;
-                break;
-            case AFTER_LUNCH:
-                //TODO : make freindship
-                dayState = DayState.NIGHT;
-                break;
-            case NIGHT:
-                //TODO : print friendship matrix.
-                if (currentDay < doomsDay) {
-                    currentDay++;
-                    dayState = DayState.DAWN;
+        do {
+            switch (dayState) {
+                case DAWN: {
+                    Activities.dawnActivity(currentDay);
+                    dayState = DayState.BEFORE_LUNCH;
+                    break;
                 }
-                break;
-        }
-
-    }
-
-    public void summarize() {
+                case BEFORE_LUNCH: {
+                    Activities.beforeLunchActivity(animalFriendshipBehaviour, yardAnimals);
+                    dayState = DayState.LUNCH;
+                    break;
+                }
+                case LUNCH: {
+                    Activities.lunchActivity(yardAnimals);
+                    dayState = DayState.AFTER_LUNCH;
+                    break;
+                }
+                case AFTER_LUNCH: {
+                    Activities.afterLunchActivity(animalFriendshipBehaviour, yardAnimals);
+                    dayState = DayState.NIGHT;
+                    break;
+                }
+                case NIGHT: {
+                    Activities.nightActivity(yardAnimals);
+                    if (currentDay < doomsDay) {
+                        currentDay++;
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (currentDay == doomsDay && dayState == DayState.NIGHT) {
+                            apocalypse = true;//no next day.
+                        } else {
+                            dayState = DayState.DAWN;
+                        }
+                    }
+                    break;
+                }
+            }
+        } while (!apocalypse);
 
     }
 
     protected void destroy() {
-
+        // memory clean up wherever necessary.
     }
 }
