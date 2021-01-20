@@ -5,7 +5,7 @@ import com.swap.fun.world.mind.animal.AnimalFriendshipBehaviour;
 import com.swap.fun.world.social.FriendshipHandler;
 import com.swap.fun.world.spacetime.AnimalYardSpaceTimeProgression;
 
-public class AnimalYard {
+public class AnimalYardSimulation {
 
     public static void main(String[] args) {
 

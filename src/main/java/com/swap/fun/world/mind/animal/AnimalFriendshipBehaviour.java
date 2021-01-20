@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class AnimalFriendshipBehaviour extends AnimalBehaviour {
 
-    private Random r = new Random();
+    private Random random = new Random();
 
     public AnimalFriendshipBehaviour(RelationshipHandler relationshipHandler) {
         super(new FriendshipHandler());
@@ -46,7 +46,7 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
 
         //pick a random stranger as prospective friend
 
-        int addFriendProposalIndex = r.nextInt(strangers.size());
+        int addFriendProposalIndex = random.nextInt(strangers.size());
         Animal prospectiveFriend = strangers.get(addFriendProposalIndex);
         System.out.print(animal.getName() + " is asking " + prospectiveFriend.getName() + " to become friends. ");
 
@@ -62,20 +62,14 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
 
 
     /*
-     Relation ship ending can be a solely done by a single person. as more and more frnds grow ,
-     the probablity of ending few relationships keeps increasing as seen in real life.
+     Relationship ending can be solely done by a single person. as more and more frnds grow ,
+     the probability of ending few relationships keeps increasing as seen in real life.
     */
 
     public void endRelationship(LivingBeing being) {
-        int loseFriendProbablity = 0;
         int numberOfFrnds = being.getFriendList().size();
 
-        if (numberOfFrnds >= 3)
-            loseFriendProbablity = 90;
-        else if (numberOfFrnds <= 2)
-            loseFriendProbablity = 10;
-
-        boolean isNowGoingToLoseFriend = r.nextInt(100) <= loseFriendProbablity;
+        boolean isNowGoingToLoseFriend = isReadyForBreakingFriendShip(being);
         if (isNowGoingToLoseFriend) {
             //which friends ties will break?
             boolean friendshipEnded = false;
@@ -93,7 +87,7 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
         }
     }
 
-    private boolean isReadyForNewFriendShip(LivingBeing animal){
+    public boolean isReadyForNewFriendShip(LivingBeing animal) {
         int makeNewFriendProbablity = 0;
         int numberOfFrnds = animal.getFriendList().size();
 
@@ -102,6 +96,18 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
         } else if (numberOfFrnds <= 2) {
             makeNewFriendProbablity = 90;
         }
-       return (r.nextInt(100) <= makeNewFriendProbablity);
+        return (random.nextInt(100) < makeNewFriendProbablity);
+    }
+
+    public boolean isReadyForBreakingFriendShip(LivingBeing animal) {
+        int loseFriendProbablity = 0;
+        int numberOfFrnds = animal.getFriendList().size();
+
+        if (numberOfFrnds >= 3)
+            loseFriendProbablity = 90;
+        else if (numberOfFrnds <= 2)
+            loseFriendProbablity = 10;
+
+        return random.nextInt(100) < loseFriendProbablity;
     }
 }

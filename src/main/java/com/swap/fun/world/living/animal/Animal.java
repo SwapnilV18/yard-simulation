@@ -4,6 +4,8 @@ import com.swap.fun.world.constants.FoodBrand;
 import com.swap.fun.world.living.Friend;
 import com.swap.fun.world.living.LivingBeing;
 
+import java.util.Objects;
+
 
 public abstract class Animal extends LivingBeing {
 
@@ -43,16 +45,18 @@ public abstract class Animal extends LivingBeing {
     /*
     equals method deals with only name as the uniqueness param for this simulation exercise.
      */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Animal animal = (Animal) o;
-        return getName().equals(animal.getName());
+        return getFavFood() == animal.getFavFood();
     }
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        return Objects.hash(super.hashCode(), getFavFood());
     }
 }

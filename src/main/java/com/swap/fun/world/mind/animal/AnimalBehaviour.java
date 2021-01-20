@@ -34,5 +34,8 @@ public abstract class AnimalBehaviour {
 
     public abstract void endRelationship(LivingBeing being1);
 
+    public abstract boolean isReadyForNewFriendShip(LivingBeing animal);
+
+    public abstract boolean isReadyForBreakingFriendShip(LivingBeing animal);
 
 }

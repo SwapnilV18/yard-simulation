@@ -8,12 +8,14 @@ public abstract class LivingBeing {
 
     protected String name;
 
-    protected List<Friend> friendList = new ArrayList<>();
+    protected List<Friend> friendList;
 
     public LivingBeing() {
+        friendList = new ArrayList<>();
     }
 
     public LivingBeing(String name) {
+        this();
         this.name = name;
     }
 

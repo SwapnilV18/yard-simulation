@@ -19,4 +19,6 @@ public class Cat extends Mammal {
     public Cat(String name, Animal bestFriendForever, FoodBrand favFood) {
         super(name, bestFriendForever, favFood);
     }
+
+
 }

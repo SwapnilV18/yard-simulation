@@ -59,7 +59,7 @@ public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
                     if (currentDay < doomsDay) {
                         currentDay++;
                         try {
-                            Thread.sleep(1500);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                             Thread.currentThread().interrupt();

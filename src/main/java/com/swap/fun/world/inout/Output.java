@@ -68,9 +68,7 @@ public class Output {
     public static String printHeaderColumn(List<? extends Animal> yardAnimals) {
         StringBuilder headerStringBuilder = new StringBuilder();//initial space for indentation
         headerStringBuilder.append(SUMMARY_SEPERATOR_START).append(SUMMARY_BLANK_ENTRY).append(SUMMARY_SEPERATOR_END);
-        yardAnimals.forEach(animal -> {
-            headerStringBuilder.append(animal.getName()).append(SUMMARY_SEPERATOR_END);
-        });
+        yardAnimals.forEach(animal -> headerStringBuilder.append(animal.getName()).append(SUMMARY_SEPERATOR_END));
         return headerStringBuilder.toString();
     }
 
@@ -94,7 +92,6 @@ public class Output {
             if (countAnimal < yardAnimals.size() - 1)
                 body.append("\n");
         }
-        ;
         return body.toString();
     }
 
