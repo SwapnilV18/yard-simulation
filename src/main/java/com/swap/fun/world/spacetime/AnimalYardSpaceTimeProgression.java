@@ -6,7 +6,6 @@ import com.swap.fun.world.living.animal.Animal;
 import com.swap.fun.world.mind.animal.AnimalBehaviour;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Animals of Yard have their own simulation world. They extend through a generic spaceTimeProgression mechanism. This class implements state design pattern to manage state of time
@@ -15,8 +14,6 @@ import java.util.logging.Logger;
  * @author - swapnil vargaonkar
  */
 public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
-
-    Logger logger = Logger.getLogger(AnimalYardSpaceTimeProgression.class.getName());
 
     private int currentDay;
     private DayState dayState;
@@ -41,27 +38,23 @@ public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
 
         do {
             switch (dayState) {
-                case DAWN: {
+                case DAWN:
                     Activities.dawnActivity(currentDay);
                     dayState = DayState.BEFORE_LUNCH;
                     break;
-                }
-                case BEFORE_LUNCH: {
+                case BEFORE_LUNCH:
                     Activities.beforeLunchActivity(animalFriendshipBehaviour, yardAnimals);
                     dayState = DayState.LUNCH;
                     break;
-                }
-                case LUNCH: {
+                case LUNCH:
                     Activities.lunchActivity(yardAnimals);
                     dayState = DayState.AFTER_LUNCH;
                     break;
-                }
-                case AFTER_LUNCH: {
+                case AFTER_LUNCH:
                     Activities.afterLunchActivity(animalFriendshipBehaviour, yardAnimals);
                     dayState = DayState.NIGHT;
                     break;
-                }
-                case NIGHT: {
+                case NIGHT:
                     Activities.nightActivity(yardAnimals);
                     if (currentDay < doomsDay) {
                         currentDay++;
@@ -69,6 +62,7 @@ public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
                             Thread.sleep(1500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
+                            Thread.currentThread().interrupt();
                         }
                         if (currentDay == doomsDay && dayState == DayState.NIGHT) {
                             apocalypse = true;//no next day.
@@ -77,7 +71,6 @@ public class AnimalYardSpaceTimeProgression extends SpaceTimeProgression {
                         }
                     }
                     break;
-                }
             }
         } while (!apocalypse);
 

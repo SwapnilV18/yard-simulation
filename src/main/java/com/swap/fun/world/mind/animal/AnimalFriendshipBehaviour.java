@@ -8,6 +8,7 @@ import com.swap.fun.world.social.RelationshipHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class based on Mediator pattern having the logic of handling friendship behaviour between 2 entities(animals)
@@ -16,52 +17,44 @@ import java.util.List;
  */
 public class AnimalFriendshipBehaviour extends AnimalBehaviour {
 
+    private Random r = new Random();
+
     public AnimalFriendshipBehaviour(RelationshipHandler relationshipHandler) {
         super(new FriendshipHandler());
     }
 
-    public void initiateRelationship(LivingBeing animal1, List<? extends Animal> yardAnimals) {
-        int makeNewFriendProbablity = 0;
-        int numberOfFrnds = animal1.getFriendList().size();
+    public void initiateRelationship(LivingBeing animal, List<? extends Animal> yardAnimals) {
 
-        if (numberOfFrnds >= 3) {
-            makeNewFriendProbablity = 10;
-        } else if (numberOfFrnds <= 2) {
-            makeNewFriendProbablity = 90;
-        }
-        boolean isNowGoingToTryMakingAFriend = (Math.random() * 100 <= makeNewFriendProbablity);
+        boolean isNowGoingToTryMakingAFriend = isReadyForNewFriendShip(animal);
         if (!isNowGoingToTryMakingAFriend)
             return;
 
-        List<Animal> strangers = new ArrayList<Animal>();
+        List<Animal> strangers = new ArrayList<>();
 
-        outer:
-        for (Animal animal : yardAnimals) {
-            if (!animal1.equals(animal)) { // check if it is not the same animal
-                for (Friend friend : animal1.getFriendList()) {
+
+        for (Animal yardAnimal : yardAnimals) {
+            if (!animal.equals(yardAnimal)) { // check if it is not the same animal
+                for (Friend friend : animal.getFriendList()) {
                     // check whether the yard animal is one amongst the friends.
-                    if (friend.getBeing().equals(animal)) {
-                        continue outer;
+                    if (friend.getBeing().equals(yardAnimal)) {
+                        break;
                     }
                 }
-                strangers.add(animal);
+                strangers.add(yardAnimal);
             }
         }
 
-        int addFriendProposalIndex = (int) (Math.random() * strangers.size());
-        Animal prospectiveFriend = strangers.get(addFriendProposalIndex);
-        System.out.print(animal1.getName() + " is asking " + prospectiveFriend.getName() + " to become friends. ");
-        numberOfFrnds = prospectiveFriend.getFriendList().size();
+        //pick a random stranger as prospective friend
 
-        if (numberOfFrnds >= 3) {
-            makeNewFriendProbablity = 10;
-        } else if (numberOfFrnds <= 2) {
-            makeNewFriendProbablity = 90;
-        }
-        boolean isNowGoingToAcceptFriendRequest = Math.random() * 100 <= makeNewFriendProbablity;
+        int addFriendProposalIndex = r.nextInt(strangers.size());
+        Animal prospectiveFriend = strangers.get(addFriendProposalIndex);
+        System.out.print(animal.getName() + " is asking " + prospectiveFriend.getName() + " to become friends. ");
+
+        boolean isNowGoingToAcceptFriendRequest = isReadyForNewFriendShip(prospectiveFriend);
+
         if (isNowGoingToAcceptFriendRequest) {
-            System.out.println(animal1.getName() + " and " + prospectiveFriend.getName() + " are friends now.");
-            getRelationshipHandler().on(animal1, prospectiveFriend);
+            System.out.println(animal.getName() + " and " + prospectiveFriend.getName() + " are friends now.");
+            getRelationshipHandler().on(animal, prospectiveFriend);
         } else
             System.out.println(prospectiveFriend.getName() + " doesn't want to be friends.");
 
@@ -82,7 +75,7 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
         else if (numberOfFrnds <= 2)
             loseFriendProbablity = 10;
 
-        boolean isNowGoingToLoseFriend = (Math.random() * 100 <= loseFriendProbablity);
+        boolean isNowGoingToLoseFriend = r.nextInt(100) <= loseFriendProbablity;
         if (isNowGoingToLoseFriend) {
             //which friends ties will break?
             boolean friendshipEnded = false;
@@ -98,5 +91,17 @@ public class AnimalFriendshipBehaviour extends AnimalBehaviour {
                 }
             }
         }
+    }
+
+    private boolean isReadyForNewFriendShip(LivingBeing animal){
+        int makeNewFriendProbablity = 0;
+        int numberOfFrnds = animal.getFriendList().size();
+
+        if (numberOfFrnds >= 3) {
+            makeNewFriendProbablity = 10;
+        } else if (numberOfFrnds <= 2) {
+            makeNewFriendProbablity = 90;
+        }
+       return (r.nextInt(100) <= makeNewFriendProbablity);
     }
 }

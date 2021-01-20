@@ -7,7 +7,7 @@ import com.swap.fun.world.living.LivingBeing;
 There could be similar classes like one sided friendship where only one side sets the other as a friend
 but the other adds the person in a acquaintance list.
  */
-public class FriendshipHandler extends RelationshipHandler {
+public class FriendshipHandler implements RelationshipHandler {
 
     public void on(LivingBeing being1, LivingBeing being2) {
         being1.getFriendList().add(new Friend(being2, false));

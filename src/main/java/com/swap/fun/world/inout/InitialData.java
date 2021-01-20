@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class InitialData {
 
-    Map animalMap = new LinkedHashMap<String, Animal>();
+    Map<String, Animal> animalMap = new LinkedHashMap<>();
 
     public List<Animal> loadAnimals() {
 
@@ -28,12 +28,12 @@ public class InitialData {
 
         setBestFriendsForever(animalMap);
 
-        return new ArrayList<Animal>(animalMap.values());
+        return new ArrayList<>(animalMap.values());
     }
 
 
     private Map<String, Dog> loadDogs() {
-        Map dogs = new LinkedHashMap<String, Dog>();
+        Map<String, Dog> dogs = new LinkedHashMap<>();
 
         dogs.put("Rex", new Dog("Rex", DogBreed.SHEPHERD, FoodBrand.ROYAL_CANIN));
         dogs.put("Max", new Dog("Max", DogBreed.SHEPHERD, FoodBrand.PURINA_ONE));
@@ -44,7 +44,7 @@ public class InitialData {
     }
 
     private Map<String, Cat> loadCats() {
-        Map cats = new LinkedHashMap<String, Cat>();
+        Map<String, Cat> cats = new LinkedHashMap<>();
 
         cats.put("Zoe", new Cat("Zoe", FoodBrand.NINE_LIVES));
         cats.put("Ada", new Cat("Ada", FoodBrand.PURINA_FRISKIES));
@@ -53,7 +53,7 @@ public class InitialData {
     }
 
     private Map<String, Chicken> loadChicken() {
-        Map chickens = new LinkedHashMap<String, Chicken>();
+        Map<String, Chicken> chickens = new LinkedHashMap<>();
 
         chickens.put("Meg", new Chicken("Meg", FoodBrand.PURINA_LAYENA, true, 0.4f));
         chickens.put("Lis", new Chicken("Lis", FoodBrand.MANNA_PRO, true, 0.35f));
@@ -64,7 +64,7 @@ public class InitialData {
     }
 
     private Map<String, Rooster> loadRooster() {
-        Map<String, Rooster> roosters = new LinkedHashMap<String, Rooster>();
+        Map<String, Rooster> roosters = new LinkedHashMap<>();
 
         roosters.put("Bob", new Rooster("Bob", FoodBrand.MANNA_PRO, 0.5f));
 
@@ -72,7 +72,7 @@ public class InitialData {
     }
 
     private Map<String, Parrot> loadParrot() {
-        Map parrots = new LinkedHashMap<String, Parrot>();
+        Map<String, Parrot> parrots = new LinkedHashMap<>();
 
         parrots.put("Mac", new Parrot("Mac", FoodBrand.LAFEBER_ORIGINAL, true, 0.33f));
         parrots.put("Alf", new Parrot("Alf", FoodBrand.KAYTEE_FIESTA, false, 0.25f));

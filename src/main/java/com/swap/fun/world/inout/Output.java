@@ -8,17 +8,21 @@ import java.util.Map;
 
 public class Output {
 
-    final private static String summaryHeaderFooterBoundary = "------";
-    final private static String commaSeperator = ", ";
-    final private static String andSeperator = " and ";
-    final private static String areEatingText = " are eating ";
-    final private static String isEatingText = " is eating ";
-    final private static String fullStop = ".";
-    final private static String summarySeperatorStart = "| ";
-    final private static String summarySeperatorEnd = " | ";
-    final private static String summaryBlankEntry = "   ";
-    final private static String summaryNAEntry = " \\ ";
-    final private static String summaryFriendEntry = " X ";
+    private Output() {
+        // static util class, not supposed to be instantiated-
+    }
+
+    private static final String SUMMARY_HEADERFOOTER_BOUNDARY = "------";
+    private static final String COMMA_SEPERATOR = ", ";
+    private static final String AND_SEPERATOR = " and ";
+    private static final String ARE_EATING = " are eating ";
+    private static final String IS_EATING = " is eating ";
+    private static final String FULL_STOP = ".";
+    private static final String SUMMARY_SEPERATOR_START = "| ";
+    private static final String SUMMARY_SEPERATOR_END = " | ";
+    private static final String SUMMARY_BLANK_ENTRY = "   ";
+    private static final String SUMMARY_NA_ENTRY = " \\ ";
+    private static final String SUMMARY_FRIEND_ENTRY = " X ";
 
 
     public static void outputFoodChoices(Map<FoodBrand, List<String>> animalFoodBrandChoices) {
@@ -37,19 +41,19 @@ public class Output {
         stringBuilder.append(animalNames.get(0));
         if (animalNames.size() > 2) {
             for (int nameCount = 1; nameCount < animalNames.size() - 1; nameCount++) {
-                stringBuilder.append(commaSeperator).append(animalNames.get(nameCount));
+                stringBuilder.append(COMMA_SEPERATOR).append(animalNames.get(nameCount));
             }
             // append last animal with an and seperator
-            stringBuilder.append(andSeperator).append(animalNames.get(animalNames.size() - 1));
+            stringBuilder.append(AND_SEPERATOR).append(animalNames.get(animalNames.size() - 1));
 
         } else if (animalNames.size() == 2) {
-            stringBuilder.append(commaSeperator).append(animalNames.get(1));
+            stringBuilder.append(COMMA_SEPERATOR).append(animalNames.get(1));
 
         } else {
-            stringBuilder.append(isEatingText).append(brand).append(fullStop);
+            stringBuilder.append(IS_EATING).append(brand).append(FULL_STOP);
             return stringBuilder.toString();
         }
-        stringBuilder.append(areEatingText).append(brand).append(fullStop);
+        stringBuilder.append(ARE_EATING).append(brand).append(FULL_STOP);
         return stringBuilder.toString();
     }
 
@@ -63,9 +67,9 @@ public class Output {
 
     public static String printHeaderColumn(List<? extends Animal> yardAnimals) {
         StringBuilder headerStringBuilder = new StringBuilder();//initial space for indentation
-        headerStringBuilder.append(summarySeperatorStart).append(summaryBlankEntry).append(summarySeperatorEnd);
+        headerStringBuilder.append(SUMMARY_SEPERATOR_START).append(SUMMARY_BLANK_ENTRY).append(SUMMARY_SEPERATOR_END);
         yardAnimals.forEach(animal -> {
-            headerStringBuilder.append(animal.getName()).append(summarySeperatorEnd);
+            headerStringBuilder.append(animal.getName()).append(SUMMARY_SEPERATOR_END);
         });
         return headerStringBuilder.toString();
     }
@@ -74,22 +78,23 @@ public class Output {
         StringBuilder body = new StringBuilder();
         for (int countAnimal = 0; countAnimal < yardAnimals.size(); countAnimal++) {
             Animal animal = yardAnimals.get(countAnimal);
-            body.append(summarySeperatorStart).append(animal.getName()).append(summarySeperatorEnd);
+            body.append(SUMMARY_SEPERATOR_START).append(animal.getName()).append(SUMMARY_SEPERATOR_END);
             yardAnimals.forEach(friend -> {
                 if (animal.equals(friend)) {
-                    body.append(summaryNAEntry);
+                    body.append(SUMMARY_NA_ENTRY);
                 } else {//check if this guy is a friend or not to the animal
                     if (animal.isFriend(friend)) {
-                        body.append(summaryFriendEntry);
+                        body.append(SUMMARY_FRIEND_ENTRY);
                     } else {
-                        body.append(summaryBlankEntry);
+                        body.append(SUMMARY_BLANK_ENTRY);
                     }
                 }
-                body.append(summarySeperatorEnd);
+                body.append(SUMMARY_SEPERATOR_END);
             });
-            if (countAnimal<yardAnimals.size()-1)
+            if (countAnimal < yardAnimals.size() - 1)
                 body.append("\n");
-        };
+        }
+        ;
         return body.toString();
     }
 
@@ -97,7 +102,7 @@ public class Output {
         StringBuilder headerStringBuilder = new StringBuilder(" ");//initial space for indentation
         // later loop this to match the count of animals
         for (int count = 0; count <= yardAnimals.size(); count++)
-            headerStringBuilder.append(summaryHeaderFooterBoundary);
+            headerStringBuilder.append(SUMMARY_HEADERFOOTER_BOUNDARY);
         return headerStringBuilder.toString();
     }
 }

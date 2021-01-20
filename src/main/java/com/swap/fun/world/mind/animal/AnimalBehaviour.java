@@ -18,9 +18,6 @@ public abstract class AnimalBehaviour {
 
     private RelationshipHandler relationshipHandler;
 
-    public AnimalBehaviour() {
-    }
-
     public AnimalBehaviour(RelationshipHandler relationshipHandler) {
         this.relationshipHandler = relationshipHandler;
     }

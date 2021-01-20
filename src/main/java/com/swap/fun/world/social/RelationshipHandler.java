@@ -2,7 +2,7 @@ package com.swap.fun.world.social;
 
 import com.swap.fun.world.living.LivingBeing;
 
-public abstract class RelationshipHandler {
+public interface RelationshipHandler {
 
     public abstract void on(LivingBeing being1, LivingBeing being2);
 

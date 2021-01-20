@@ -28,14 +28,6 @@ public abstract class Animal extends LivingBeing {
         this.setBestFriendForever(bestFriendForever);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public FoodBrand getFavFood() {
         return favFood;
     }

@@ -8,6 +8,10 @@ public class Dog extends Mammal {
 
     private DogBreed dogBreed;
 
+    public DogBreed getDogBreed() {
+        return dogBreed;
+    }
+
     public Dog(String name) {
         super(name);
     }

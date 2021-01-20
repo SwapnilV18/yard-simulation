@@ -5,12 +5,19 @@ import com.swap.fun.world.inout.Output;
 import com.swap.fun.world.living.animal.Animal;
 import com.swap.fun.world.mind.animal.AnimalBehaviour;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
 
 public class Activities {
 
+    private Activities() {
+        //to avoid instantiating this static class
+    }
+
     // create a map of brand and the corresponding animals who have this brand for lunch
-    static Map<FoodBrand, List<String>> animalFoodBrandChoices = new HashMap();
+    static EnumMap<FoodBrand, List<String>> animalFoodBrandChoices = new EnumMap<>(FoodBrand.class);
 
     /*
     The day starts with a message: “Day-N” (N from 1 to 10).
@@ -27,7 +34,7 @@ public class Activities {
     public static void beforeLunchActivity(AnimalBehaviour animalFriendshipBehaviour,
                                            List<? extends Animal> yardAnimals) {
         //breaking of friendship
-        yardAnimals.stream().forEach(animal -> animalFriendshipBehaviour.endRelationship(animal));
+        yardAnimals.stream().forEach(animalFriendshipBehaviour::endRelationship);
     }
 
     /*
@@ -38,22 +45,20 @@ public class Activities {
 
         // This data never changes so this computation is done only once for the first time.
         if (animalFoodBrandChoices.isEmpty()) {
-            Arrays.stream(FoodBrand.values()).forEach(foodBrand -> {
-                animalFoodBrandChoices.put(foodBrand, new ArrayList<String>());
-            });
+            Arrays.stream(FoodBrand.values()).forEach(foodBrand ->
+                    animalFoodBrandChoices.put(foodBrand, new ArrayList<String>()));
 
             yardAnimals.stream().forEach(animal -> {
-                FoodBrand favFoodBrand = ((Animal) animal).getFavFood();
+                FoodBrand favFoodBrand = animal.getFavFood();
                 List<String> animalsHavingSameBrandFood = animalFoodBrandChoices.get(favFoodBrand);
                 // add the animal to the list of animals having food with this brand
-                animalsHavingSameBrandFood.add(((Animal) animal).getName());
+                animalsHavingSameBrandFood.add(animal.getName());
                 // add the list again back to the map
                 animalFoodBrandChoices.put(favFoodBrand, animalsHavingSameBrandFood);
             });
         }
 
         Output.outputFoodChoices(animalFoodBrandChoices);
-
     }
 
     /*

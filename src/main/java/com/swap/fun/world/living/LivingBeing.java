@@ -8,7 +8,7 @@ public abstract class LivingBeing {
 
     protected String name;
 
-    protected List<Friend> friendList = new ArrayList<Friend>();
+    protected List<Friend> friendList = new ArrayList<>();
 
     public LivingBeing() {
     }
@@ -34,7 +34,7 @@ public abstract class LivingBeing {
     }
 
     public boolean isFriend(LivingBeing being) {
-        return getFriendList().stream().filter(friend -> friend.getBeing().equals(being)).findFirst().isPresent();
+        return getFriendList().stream().anyMatch(friend -> friend.getBeing().equals(being));
     }
 
     public void addFriend(Friend friend) {
