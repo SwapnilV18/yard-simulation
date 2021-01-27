@@ -7,7 +7,6 @@ import com.swap.fun.world.living.animal.bird.Parrot;
 import com.swap.fun.world.living.animal.mammal.Cat;
 import com.swap.fun.world.living.animal.mammal.Dog;
 import com.swap.fun.world.social.FriendshipHandler;
-import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,13 +37,11 @@ public class AnimalFriendshipBehaviourTest {
         kitten1.addFriend(new Friend(par1, false));
     }
 
-    @Description("This test will check the readiness (probability) for making new friendship for people having less " +
-            "than 2 friends")
     @Test
     public void testIsReadyForNewFriendShipFriendsLessThan2Test() {
         boolean isReadyForNewFriendship;
         int readyCount = 0;
-        System.out.println("pup1"+pup1);
+        System.out.println("pup1" + pup1);
         for (int i = 0; i < loopCount; i++) {
             isReadyForNewFriendship = animalFriendshipBehaviour.isReadyForNewFriendShip(pup1);
             if (isReadyForNewFriendship)
@@ -56,8 +53,6 @@ public class AnimalFriendshipBehaviourTest {
 
     }
 
-    @Description("This test will check the readiness (probability) for breaking friendship for people having less " +
-            "than 2 friends")
     @Test
     public void testIsReadyForBreakingFriendShipFriendsLessThan2Test() {
         boolean isReadyForBreakingFriend;
@@ -73,8 +68,6 @@ public class AnimalFriendshipBehaviourTest {
 
     }
 
-    @Description("This test will check the readiness (probability) for making new friendship for people having more " +
-            "than 2 friends")
     @Test
     public void testIsReadyForNewFriendShipFriendsMoreThan2Test() {
         boolean isReadyForNewFriendship;
@@ -91,8 +84,6 @@ public class AnimalFriendshipBehaviourTest {
 
     }
 
-    @Description("This test will check the readiness (probability) for breaking friendship for people having more " +
-            "than 2 friends")
     @Test
     public void testIsReadyForBreakingFriendShipFriendsMoreThan2Test() {
         boolean isReadyForBreakingFriend;

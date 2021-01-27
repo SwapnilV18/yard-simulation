@@ -31,7 +31,7 @@ public abstract class SpaceTimeProgression {
     public abstract void introduceLivingBeings();
 
     /*
-    This will make the spacetime to start rolling an the simulation world will come to living
+    This will make the spacetime to start rolling an the simulation world will come to life
      */
     public abstract void spinTime();
 
