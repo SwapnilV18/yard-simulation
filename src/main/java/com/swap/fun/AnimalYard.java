@@ -12,6 +12,7 @@ public class AnimalYard {
         AnimalYardSpaceTimeProgression animalYardSpaceTimeProgression = new AnimalYardSpaceTimeProgression(1,
                 DayState.DAWN,
                 10,
+                
                 new AnimalFriendshipBehaviour(new FriendshipHandler()));
         animalYardSpaceTimeProgression.bigBang();
     }
